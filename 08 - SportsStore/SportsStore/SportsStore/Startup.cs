@@ -24,10 +24,12 @@ namespace SportsStore {
                 options.UseSqlServer(
                     Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
-            services.AddMvc();
+            services.AddMvc( options => 
+                options.EnableEndpointRouting = false
+            );
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
