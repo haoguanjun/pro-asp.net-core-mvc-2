@@ -1,7 +1,7 @@
 ﻿@model ProductsListViewModel
 
 @foreach (var p in Model.Products) {
-    @Html.Partial("ProductSummary", p)
+     <partial name="Shared/ProductSummary", model="p" />
 }
 
 <div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
