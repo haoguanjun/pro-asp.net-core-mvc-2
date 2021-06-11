@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.AspNetCore.Routing;
 using UrlsAndRoutes.Infrastructure;
@@ -16,10 +17,12 @@ namespace UrlsAndRoutes {
         public void ConfigureServices(IServiceCollection services) {
             services.Configure<RouteOptions>(options =>
                 options.ConstraintMap.Add("weekday", typeof(WeekDayConstraint)));
-            services.AddMvc();
+            services.AddMvc( options =>
+                options.EnableEndpointRouting = false
+            );
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
