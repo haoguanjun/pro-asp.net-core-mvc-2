@@ -37,7 +37,9 @@ public void ConfigureServices(IServiceCollection services) {
     }).AddEntityFrameworkStores<AppIdentityDbContext>()
         .AddDefaultTokenProviders();
 
-    services.AddMvc();
+    services.AddMvc( options =>
+        options.EnableEndpointRouting = false
+    );
 }
 
         public void Configure(IApplicationBuilder app) {
