@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ConfiguringApps.Infrastructure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace ConfiguringApps {
     public class Startup {
@@ -27,10 +28,12 @@ namespace ConfiguringApps {
 
         public void ConfigureDevelopmentServices(IServiceCollection services) {
             services.AddSingleton<UptimeService>();
-            services.AddMvc();
+            services.AddMvc( options => 
+                options.EnableEndpointRouting = false
+            );
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseExceptionHandler("/Home/Error");
             app.UseStaticFiles();
             app.UseMvc(routes => {
@@ -41,12 +44,11 @@ namespace ConfiguringApps {
         }
 
         public void ConfigureDevelopment(IApplicationBuilder app,
-                IHostingEnvironment env) {
+                IWebHostEnvironment env) {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
-            app.UseBrowserLink();
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvcWithDefaultRoute( );
         }
     }
 }
