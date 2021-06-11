@@ -13,14 +13,16 @@ using Microsoft.AspNetCore.Mvc.Razor;
 namespace Views {
     public class Startup {
         public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc();
+            services.AddMvc( options => 
+                options.EnableEndpointRouting = false
+            );
             services.Configure<RazorViewEngineOptions>(options => {
                 options.ViewLocationExpanders.Add(new SimpleExpander());
                 options.ViewLocationExpanders.Add(new ColorExpander());
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
