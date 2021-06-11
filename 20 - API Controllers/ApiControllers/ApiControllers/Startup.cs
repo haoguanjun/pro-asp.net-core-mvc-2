@@ -17,6 +17,7 @@ namespace ApiControllers {
             services.AddMvc()
                 .AddXmlDataContractSerializerFormatters()
                 .AddMvcOptions(opts => {
+                    opts.EnableEndpointRouting = false;
                     opts.FormatterMappings.SetMediaTypeMappingForFormat("xml",
                         new MediaTypeHeaderValue("application/xml"));
                     opts.RespectBrowserAcceptHeader = true;
@@ -24,7 +25,7 @@ namespace ApiControllers {
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
