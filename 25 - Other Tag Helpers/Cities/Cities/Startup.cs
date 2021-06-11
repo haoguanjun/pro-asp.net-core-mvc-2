@@ -13,10 +13,12 @@ namespace Cities {
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddSingleton<IRepository, MemoryRepository>();
-            services.AddMvc();
+            services.AddMvc( options =>
+                options.EnableEndpointRouting = false
+            );
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.Map("/mvcapp", appBuilder => {
                 appBuilder.UseStatusCodePages();
                 appBuilder.UseDeveloperExceptionPage();
