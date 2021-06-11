@@ -21,8 +21,10 @@ namespace Filters.Infrastructure {
         private void WriteMessage(FilterContext context, string msg) {
             byte[] bytes = Encoding.ASCII
                 .GetBytes($"<div>{msg}</div>");
+
+            // Synchronous operations are disallowed. Call WriteAsync or set AllowSynchronousIO to true instead.
             context.HttpContext.Response
-                .Body.Write(bytes, 0, bytes.Length);
+                .Body.WriteAsync(bytes, 0, bytes.Length);
         }
     }
 }

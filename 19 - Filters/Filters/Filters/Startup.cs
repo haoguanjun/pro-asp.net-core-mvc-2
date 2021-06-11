@@ -16,12 +16,14 @@ namespace Filters {
             services.AddScoped<ViewResultDiagnostics>();
             services.AddScoped<DiagnosticsFilter>();
             services.AddMvc().AddMvcOptions(options => {
+                options.EnableEndpointRouting = false;
+                
                 options.Filters.Add(new
                     MessageAttribute("This is the Globally-Scoped Filter"));
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
