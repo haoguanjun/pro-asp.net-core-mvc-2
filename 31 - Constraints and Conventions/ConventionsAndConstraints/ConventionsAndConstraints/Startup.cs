@@ -15,12 +15,13 @@ namespace ConventionsAndConstraints {
         public void ConfigureServices(IServiceCollection services) {
             services.AddSingleton<UserAgentComparer>();
             services.AddMvc().AddMvcOptions(options => {
+                options.EnableEndpointRouting = false;
                 //options.Conventions.Add(new ActionNamePrefixAttribute("Do"));
                 //options.Conventions.Add(new AdditionalActionsAttribute());
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
