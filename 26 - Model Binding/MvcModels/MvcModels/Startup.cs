@@ -12,9 +12,11 @@ namespace MvcModels {
     public class Startup {
         public void ConfigureServices(IServiceCollection services) {
             services.AddSingleton<IRepository, MemoryRepository>();
-            services.AddMvc();
+            services.AddMvc( options => 
+                options.EnableEndpointRouting = false
+            );
         }
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
