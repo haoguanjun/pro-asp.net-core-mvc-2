@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.AspNetCore.Routing;
 using UrlsAndRoutes.Infrastructure;
@@ -19,10 +20,12 @@ namespace UrlsAndRoutes {
                 options.LowercaseUrls = true;
                 options.AppendTrailingSlash = true;
             });
-            services.AddMvc();
+            services.AddMvc( options =>
+                options.EnableEndpointRouting = false
+            );
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
@@ -32,7 +35,7 @@ namespace UrlsAndRoutes {
                     template: "{area:exists}/{controller=Home}/{action=Index}");
 
                 routes.Routes.Add(new LegacyRoute(
-                    app.ApplicationServices,
+                    routes.DefaultHandler,
                     "/articles/Windows_3.1_Overview.html",
                     "/old/.NET_1.0_Class_Library"));
 

@@ -4,17 +4,18 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace UrlsAndRoutes.Infrastructure {
+
+    // https://stackoverflow.com/questions/59720319/migrate-irouter-usage-to-asp-net-core-3-1
     public class LegacyRoute : IRouter {
         private string[] urls;
         private IRouter mvcRoute;
 
-        public LegacyRoute(IServiceProvider services, params string[] targetUrls) {
+        public LegacyRoute(IRouter routeHandler, params string[] targetUrls) {
             this.urls = targetUrls;
-            mvcRoute = services.GetRequiredService<MvcRouteHandler>();
+            mvcRoute = routeHandler;
         }
 
         public async Task RouteAsync(RouteContext context) {
