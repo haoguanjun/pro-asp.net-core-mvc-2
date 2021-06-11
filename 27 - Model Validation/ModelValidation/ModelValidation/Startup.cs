@@ -12,13 +12,14 @@ namespace ModelValidation {
     public class Startup {
 
         public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc().AddMvcOptions(opts =>
+            services.AddMvc().AddMvcOptions(opts => {
+                opts.EnableEndpointRouting = false;
                 opts.ModelBindingMessageProvider
-                    .SetValueMustNotBeNullAccessor(value => "Please enter a value")
-            );
+                    .SetValueMustNotBeNullAccessor(value => "Please enter a value");
+            });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
