@@ -66,7 +66,9 @@ namespace Users {
             }).AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc( options => 
+                options.EnableEndpointRouting = false
+            );
         }
 
         public void Configure(IApplicationBuilder app) {
